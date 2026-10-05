@@ -42,7 +42,7 @@ tasks:
     desc: Deploy site
     deps: [ site-build ]
     cmds:
-      - gh-pages -d build/gh-pages --nojekyll
+      - pnpm run site:deploy
 
   site-build-mdbook:
     desc: Generate mdbook

@@ -28,7 +28,8 @@
     "typedoc": "typedoc",
     "postbuild": "validate-package-exports --check",
     "prepublishOnly": "validate-package-exports --check",
-    "knip": "knip"
+    "knip": "knip",
+    "site:deploy": "gh-pages -d build/gh-pages --nojekyll"
   },
   "dependencies": {
     "@microsoft/api-extractor": "7.59.3",
