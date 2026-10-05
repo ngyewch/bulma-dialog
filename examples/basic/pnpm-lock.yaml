@@ -14,6 +14,7 @@ importers:
       bulma:
         specifier: 1.0.4
         version: 1.0.4
+    devDependencies:
       knip:
         specifier: 6.39.0
         version: 6.39.0

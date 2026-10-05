@@ -7,19 +7,14 @@
     "dev": "vite",
     "knip": "knip"
   },
-  "dependencies": {
-    "@ngyewch/bulma-dialog": "link:../..",
-    "bulma": "1.0.4",
+  "devDependencies": {
     "knip": "6.39.0",
     "npm-run-all2": "9.0.3",
     "typescript": "6.0.3",
     "vite": "8.3.2"
   },
-  "keywords": [
-    "bulma",
-    "dialog"
-  ],
-  "files": [
-    "dist/*"
-  ]
+  "dependencies": {
+    "@ngyewch/bulma-dialog": "link:../..",
+    "bulma": "1.0.4"
+  }
 }
