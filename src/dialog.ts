@@ -2,7 +2,8 @@ export interface DialogOptions<T> {
     title?: string;
     hideCloseButton?: boolean;
     disableOutsideClick?: boolean;
-    mount: (containerElement: HTMLElement, resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
+    mountContent?: (containerElement: HTMLElement, resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
+    mountFooter?: (containerElement: HTMLElement, resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
     classes?: string[];
     styles?: Record<string, string>;
 }
@@ -61,19 +62,36 @@ export function showDialog<T>(options: DialogOptions<T>): Promise<T> {
             closeButtonEl.appendChild(closeSpanEl);
         }
         modalCardEl.appendChild(modalCardHeaderEl);
-        const modalCardContentEl = document.createElement('div');
-        modalCardContentEl.classList.add('card-content');
-        modalCardEl.appendChild(modalCardContentEl);
 
-        options.mount(modalCardContentEl,
-            (value: T | PromiseLike<T>): void => {
-                document.body.removeChild(modalEl);
-                resolve(value);
-            },
-            (reason?: any): void => {
-                document.body.removeChild(modalEl);
-                reject(reason);
-            });
+        if (options.mountContent !== undefined) {
+            const modalCardContentEl = document.createElement('div');
+            modalCardContentEl.classList.add('card-content');
+            modalCardEl.appendChild(modalCardContentEl);
+            options.mountContent(modalCardContentEl,
+                (value: T | PromiseLike<T>): void => {
+                    document.body.removeChild(modalEl);
+                    resolve(value);
+                },
+                (reason?: any): void => {
+                    document.body.removeChild(modalEl);
+                    reject(reason);
+                });
+        }
+
+        if (options.mountFooter !== undefined) {
+            const modalCardFooterEl = document.createElement('footer');
+            modalCardFooterEl.classList.add('card-footer');
+            modalCardEl.appendChild(modalCardFooterEl);
+            options.mountFooter(modalCardFooterEl,
+                (value: T | PromiseLike<T>): void => {
+                    document.body.removeChild(modalEl);
+                    resolve(value);
+                },
+                (reason?: any): void => {
+                    document.body.removeChild(modalEl);
+                    reject(reason);
+                });
+        }
 
         document.body.appendChild(modalEl);
     });
