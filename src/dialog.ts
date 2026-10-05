@@ -96,3 +96,17 @@ export function showDialog<T>(options: DialogOptions<T>): Promise<T> {
         document.body.appendChild(modalEl);
     });
 }
+
+export function createDialogFooterItem(label: string, onclick?: (e: PointerEvent) => void): HTMLElement {
+    const footerItem = document.createElement('a');
+    footerItem.classList.add('card-footer-item');
+    footerItem.innerText = label;
+    if (onclick !== undefined) {
+        footerItem.addEventListener('click', e => {
+            e.preventDefault();
+            e.stopPropagation();
+            onclick(e);
+        });
+    }
+    return footerItem;
+}
