@@ -1,0 +1,51 @@
+{
+  "name": "@ngyewch/bulma-dialog",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Bulma dialog.",
+  "author": "Nick Ng",
+  "license": "MIT",
+  "homepage": "http://ngyewch.github.io/bulma-dialog/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngyewch/bulma-dialog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ngyewch/bulma-dialog/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/bulma-dialog.js"
+    }
+  },
+  "module": "./dist/bulma-dialog.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "doBuild": "vite build",
+    "check": "tsc --noEmit",
+    "build": "run-s check doBuild",
+    "typedoc": "typedoc",
+    "postbuild": "validate-package-exports --check",
+    "prepublishOnly": "validate-package-exports --check",
+    "knip": "knip"
+  },
+  "dependencies": {
+    "@microsoft/api-extractor": "7.59.3",
+    "gh-pages": "6.3.0",
+    "knip": "6.39.0",
+    "npm-run-all2": "9.0.3",
+    "typedoc": "0.28.20",
+    "typescript": "6.0.3",
+    "unplugin-dts": "1.1.2",
+    "validate-package-exports": "1.5.0",
+    "vite": "8.3.2"
+  },
+  "keywords": [
+    "bulma",
+    "dialog"
+  ],
+  "files": [
+    "dist/*"
+  ]
+}

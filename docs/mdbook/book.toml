@@ -1,0 +1,9 @@
+[book]
+authors = ["Nick Ng"]
+language = "en"
+title = "bulma-dialog"
+
+[output.html]
+git-repository-url = "https://github.com/ngyewch/bulma-dialog"
+site-url = "/bulma-dialog/"
+additional-css = ["custom.css"]
