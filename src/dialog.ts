@@ -2,8 +2,8 @@ export interface DialogOptions<T> {
     title?: string;
     hideCloseButton?: boolean;
     disableOutsideClick?: boolean;
-    mountContent?: (containerElement: HTMLElement, resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
-    mountFooter?: (containerElement: HTMLElement, resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
+    mount?: (contentElement: HTMLElement, footerElement: HTMLElement, resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
+    onClose?: () => void;
     classes?: string[];
     styles?: Record<string, string>;
 }
@@ -22,11 +22,18 @@ export function showDialog<T>(options: DialogOptions<T>): Promise<T> {
                 });
         }
 
+        const doClose = (): void => {
+            document.body.removeChild(modalEl);
+            if (options.onClose) {
+                options.onClose();
+            }
+        };
+
         const modalBackgroundEl = document.createElement('div');
         modalBackgroundEl.classList.add('modal-background');
         if ((options.disableOutsideClick === undefined) || !options.disableOutsideClick) {
             modalBackgroundEl.onclick = () => {
-                document.body.removeChild(modalEl);
+                doClose();
                 reject();
             };
         }
@@ -53,7 +60,7 @@ export function showDialog<T>(options: DialogOptions<T>): Promise<T> {
             closeButtonEl.classList.add('card-header-icon');
             closeButtonEl.setAttribute('aria-label', 'close');
             closeButtonEl.onclick = () => {
-                document.body.removeChild(modalEl);
+                doClose();
                 reject();
             };
             modalCardHeaderEl.appendChild(closeButtonEl);
@@ -63,32 +70,22 @@ export function showDialog<T>(options: DialogOptions<T>): Promise<T> {
         }
         modalCardEl.appendChild(modalCardHeaderEl);
 
-        if (options.mountContent !== undefined) {
+        if (options.mount !== undefined) {
             const modalCardContentEl = document.createElement('div');
             modalCardContentEl.classList.add('card-content');
             modalCardEl.appendChild(modalCardContentEl);
-            options.mountContent(modalCardContentEl,
-                (value: T | PromiseLike<T>): void => {
-                    document.body.removeChild(modalEl);
-                    resolve(value);
-                },
-                (reason?: any): void => {
-                    document.body.removeChild(modalEl);
-                    reject(reason);
-                });
-        }
 
-        if (options.mountFooter !== undefined) {
             const modalCardFooterEl = document.createElement('footer');
             modalCardFooterEl.classList.add('card-footer');
             modalCardEl.appendChild(modalCardFooterEl);
-            options.mountFooter(modalCardFooterEl,
+
+            options.mount(modalCardContentEl, modalCardFooterEl,
                 (value: T | PromiseLike<T>): void => {
-                    document.body.removeChild(modalEl);
+                    doClose();
                     resolve(value);
                 },
                 (reason?: any): void => {
-                    document.body.removeChild(modalEl);
+                    doClose();
                     reject(reason);
                 });
         }

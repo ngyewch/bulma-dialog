@@ -11,7 +11,7 @@ showDialogButton.addEventListener('click', () => {
     let currentText: string = text;
     showDialog<string>({
         title: 'Test dialog',
-        mountContent: (mountElement, _resolve, _reject) => {
+        mount: (contentElement, footerElement, resolve, reject) => {
             const inputEl = document.createElement('input');
             inputEl.classList.add('input');
             inputEl.value = currentText;
@@ -19,15 +19,17 @@ showDialogButton.addEventListener('click', () => {
             inputEl.addEventListener('change', () => {
                 currentText = inputEl.value;
             });
-            mountElement.appendChild(inputEl);
-        },
-        mountFooter: (mountElement, resolve, reject) => {
-            mountElement.appendChild(createDialogFooterItem('OK', _e => {
+            contentElement.appendChild(inputEl);
+
+            footerElement.appendChild(createDialogFooterItem('OK', _e => {
                 resolve(currentText);
             }));
-            mountElement.appendChild(createDialogFooterItem('Cancel', _e => {
+            footerElement.appendChild(createDialogFooterItem('Cancel', _e => {
                 reject();
             }));
+        },
+        onClose: () => {
+            console.log('dialog closed');
         },
     })
         .then(result => {
