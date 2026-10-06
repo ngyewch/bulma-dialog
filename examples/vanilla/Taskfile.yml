@@ -17,6 +17,12 @@ tasks:
     cmds:
       - pnpm run build
 
+  run:
+    desc: Run
+    deps: [ install ]
+    cmds:
+      - pnpm run dev
+
   outdated:
     desc: Outdated
     aliases: [ dependencyUpdates ]
@@ -36,13 +42,12 @@ tasks:
       - mkdir -p build/gh-pages
       - task: site-build-mdbook
       - task: site-build-typedoc
-      - task: site-build-example-vanilla
 
   site-deploy:
     desc: Deploy site
     deps: [ site-build ]
     cmds:
-      - pnpm run site:deploy
+      - gh-pages -d build/gh-pages --nojekyll
 
   site-build-mdbook:
     desc: Generate mdbook
@@ -53,15 +58,3 @@ tasks:
     desc: Generate typedoc
     cmds:
       - pnpm run typedoc
-
-  site-build-example-vanilla:
-    cmds:
-      - cd examples/vanilla && mise exec -- task build
-      - mkdir -p build/gh-pages/projects/vanilla
-      - cp -r examples/vanilla/dist/* build/gh-pages/projects/vanilla
-
-  site-serve:
-    desc: Site - Serve
-    deps: [ site-build ]
-    cmds:
-      - caddy file-server --root build/gh-pages --listen 127.0.0.1:8080
