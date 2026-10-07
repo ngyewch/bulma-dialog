@@ -1,6 +1,7 @@
 import {mount} from 'svelte';
 
 import 'bulma/css/bulma.css';
+import '@ngyewch/bulma-dialog/dist/bulma-dialog.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './app.css';
 

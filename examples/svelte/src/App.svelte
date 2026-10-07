@@ -20,13 +20,9 @@
         showDialog<CustomStruct>({
             title: 'Support',
             mount: (contentElement, footerElement, resolve, reject) => {
-                const submitButton = createDialogFooterItem('Submit', () => {
-                    resolve(newData);
-                });
+                const submitButton = createDialogFooterItem('Submit', () => resolve(newData));
                 footerElement.appendChild(submitButton);
-                footerElement.appendChild(createDialogFooterItem('Cancel', () => {
-                    reject();
-                }))
+                footerElement.appendChild(createDialogFooterItem('Cancel', () => reject()))
 
                 mount(CustomForm, {
                     target: contentElement,
@@ -34,9 +30,9 @@
                         data: newData,
                         onValidate: (isValid: boolean) => {
                             if (isValid) {
-                                submitButton.classList.remove('disabled');
+                                submitButton.classList.remove('is-disabled');
                             } else {
-                                submitButton.classList.add('disabled');
+                                submitButton.classList.add('is-disabled');
                             }
                         },
                     },

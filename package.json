@@ -17,7 +17,8 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/bulma-dialog.js"
-    }
+    },
+    "./dist/bulma-dialog.css": "./dist/bulma-dialog.css"
   },
   "module": "./dist/bulma-dialog.js",
   "types": "./dist/index.d.ts",

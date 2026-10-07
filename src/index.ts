@@ -1,3 +1,5 @@
+import './dialog.css';
+
 import {
     type DialogOptions,
     createDialogFooterItem,

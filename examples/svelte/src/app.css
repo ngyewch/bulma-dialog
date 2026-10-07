@@ -1,9 +1,3 @@
 body {
     margin: 1em;
 }
-
-a.disabled {
-    pointer-events: none; /* Prevents click events */
-    cursor: default;      /* Removes the pointer finger cursor */
-    color: #cccccc;       /* Visual cue that it's unclickable */
-}
