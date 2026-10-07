@@ -19,6 +19,7 @@ tasks:
 
   run:
     desc: Run
+    aliases: [ dev ]
     deps: [ install ]
     cmds:
       - pnpm run dev
